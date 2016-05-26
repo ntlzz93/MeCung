@@ -1,0 +1,8 @@
+D:\Study\IT\Artificial Intelligence\Source Code\MeCung\MeCung\obj\Debug\MeCung.csprojResolveAssemblyReference.cache
+D:\Study\IT\Artificial Intelligence\Source Code\MeCung\MeCung\obj\Debug\MeCung.frmMainGame.resources
+D:\Study\IT\Artificial Intelligence\Source Code\MeCung\MeCung\obj\Debug\MeCung.Properties.Resources.resources
+D:\Study\IT\Artificial Intelligence\Source Code\MeCung\MeCung\obj\Debug\MeCung.csproj.GenerateResource.Cache
+D:\Study\IT\Artificial Intelligence\Source Code\MeCung\MeCung\bin\Debug\MeCung.exe
+D:\Study\IT\Artificial Intelligence\Source Code\MeCung\MeCung\bin\Debug\MeCung.pdb
+D:\Study\IT\Artificial Intelligence\Source Code\MeCung\MeCung\obj\Debug\MeCung.exe
+D:\Study\IT\Artificial Intelligence\Source Code\MeCung\MeCung\obj\Debug\MeCung.pdb
