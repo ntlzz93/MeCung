@@ -14,7 +14,7 @@ namespace MeCung
         public frmMainGame()
         {
             game = new GameSettings();
-            game.createBoard(5,5);
+            game.startGame();
             Form_Load();
         }
 
@@ -26,10 +26,10 @@ namespace MeCung
         {
             const int tileSize = 100;
             const int gridSize = 5;
-            var clr1 = Color.DarkGray;
-            var clr2 = Color.LightSeaGreen;
-            var clr3 = Color.DarkBlue;
-            var clr4 = Color.DarkRed;
+            var clr1 = Color.Black; // can't move
+            var clr2 = Color.White; // can move
+            var clr3 = Color.DarkBlue; // start
+            var clr4 = Color.DarkRed; // goal
             int i = 0;
 
             _chessBoardPanels = new Panel[gridSize, gridSize];
