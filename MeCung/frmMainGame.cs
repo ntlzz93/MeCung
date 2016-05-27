@@ -13,9 +13,7 @@ namespace MeCung
     {
         public frmMainGame()
         {
-            game = new GameSettings();
-            game.startGame();
-            Form_Load();
+            InitializeComponent();
         }
 
         GameSettings game;
@@ -70,6 +68,22 @@ namespace MeCung
                     }
                 }
             }
+        }
+
+        private void btnRandom_Click(object sender, EventArgs e)
+        {
+            game = new GameSettings();
+            game.createRandomBoard(5, 5);
+            Form_Load();
+            game.startGame();
+        }
+
+        private void btnSelfCreate_Click(object sender, EventArgs e)
+        {
+            game = new GameSettings();
+            game.createBoard(5, 5);
+            Form_Load();
+            game.startGame();
         }
 
 

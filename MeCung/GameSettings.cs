@@ -18,15 +18,16 @@ namespace MeCung
             
         }
         public List<int> elements;
-        public treeSearch link1;
-        public treeSearch link2;
-        public treeSearch link3;
-        public treeSearch link4;
-        public treeSearch parent;
+        public treeSearch link1 ;
+        public treeSearch link2 ;
+        public treeSearch link3 ;
+        public treeSearch link4 ;
+        public treeSearch parent ;
     }
 
     class GameSettings
     {
+        #region Variable
         public List<int> board;
         private List<int> initState;
         private List<int> goalState;
@@ -49,14 +50,17 @@ namespace MeCung
             States = new List<treeSearch>();
             root = new treeSearch();
             goalStateNode = new treeSearch();
-        }
 
+        }
+        #endregion
+
+        #region Start Game
         public void startGame()
         {
-            createBoard(row, col) ;
+            //createBoard(row, col) ;
             makeRoot(initState);
             success = false;
-            treeSearch currentNode;
+            treeSearch currentNode = new treeSearch();
 
             while (States.Count > 0)
             {
@@ -65,6 +69,7 @@ namespace MeCung
                 insertNodeTree(currentNode);
             }
         }
+        
         public void createInitState(List<int> state)
         {
             for (int i = 0; i < state.Count; i++)
@@ -91,9 +96,19 @@ namespace MeCung
             goalState[posStart] = 1;
            
         }
+        #endregion
+
+        #region Self-Create Board Game
         public void createBoard(int row,int column)
         {
             
+            
+        }
+        #endregion
+
+        #region Create Random Board
+        public void createRandomBoard(int row, int column)
+        {
             Random rdm = new Random();
             board = new List<int>();
 
@@ -115,7 +130,9 @@ namespace MeCung
             createInitState(board);
             createGoalState(board);
         }
+        #endregion
 
+        #region Main Logic Game
         public void makeRoot(List<int> state)
         {
             treeSearch rootNode = new treeSearch();
@@ -143,6 +160,18 @@ namespace MeCung
             States.Add(root);
             
         }
+        public void changeValueAfterExit(treeSearch currentNode)
+        {
+            if (currentNode.position == currentNode.posGoal)
+            {
+                currentNode.elements[posGoal] = 2;
+                currentNode.elements[currentNode.parent.posStart] = 1;
+            }
+            else
+            {
+                return;
+            }
+        }
         public void insertNodeTree(treeSearch node)
         {
             treeSearch firstNode = new treeSearch();
@@ -154,6 +183,7 @@ namespace MeCung
                 firstNode.cost = getCost(firstNode) + firstNode.distance;
                 firstNode.link1 = null; firstNode.link2 = null; firstNode.link3 = null; firstNode.link4 = null;
                 firstNode.parent = node;
+                changeValueAfterExit(firstNode);
             }
             
 
@@ -166,6 +196,7 @@ namespace MeCung
                 secondNode.cost = getCost(secondNode) + secondNode.distance;
                 secondNode.link1 = null; secondNode.link2 = null; secondNode.link3 = null; secondNode.link4 = null;
                 secondNode.parent = node;
+                changeValueAfterExit(secondNode);
             }
            
 
@@ -178,6 +209,7 @@ namespace MeCung
                 thirdNode.cost = getCost(thirdNode) + thirdNode.distance;
                 thirdNode.link1 = null; thirdNode.link2 = null; thirdNode.link3 = null; thirdNode.link4 = null;
                 thirdNode.parent = node;
+                changeValueAfterExit(thirdNode);
             }
             
 
@@ -190,6 +222,7 @@ namespace MeCung
                 fouthNode.cost = getCost(fouthNode)+fouthNode.distance;
                 fouthNode.link1 = null; fouthNode.link2 = null; fouthNode.link3 = null; fouthNode.link4 = null;
                 fouthNode.parent = node;
+                changeValueAfterExit(fouthNode);
             }
             
 
@@ -328,9 +361,15 @@ namespace MeCung
                 success = true;
                 printResultConsole(state.link4);
             }
-             
+            if (success)
+            {
+                while (States.Count > 0)
+                {
+                    States.RemoveAt(0);
+                }
+            }
         }
-        List<treeSearch> temp1;
+        List<treeSearch> temp1 = new List<treeSearch>();
         public void printResultConsole(treeSearch node)
         {
             while (node != null)
@@ -341,9 +380,9 @@ namespace MeCung
 
             for (int j = temp1.Count - 1; j >= 0; j--)
             {
-                for (int i = 0; i < temp1[i].elements.Count; i++)
+                for (int i = 0; i < temp1[j].elements.Count; i++)
                 {
-                    System.Console.Write(temp1[i].elements[i] + " ");
+                    System.Console.Write(temp1[j].elements[i] + " ");
                     if (i % 5 == 4)
                     {
                         System.Console.WriteLine();
@@ -366,12 +405,6 @@ namespace MeCung
                 {
                     currentNode.posGoal = i;
                 }
-            }
-
-            if (currentNode.posStart == currentNode.posGoal)
-            {
-                currentNode.elements[currentNode.posGoal] = 2;
-                currentNode.elements[currentNode.posStart] = 1;
             }
 
             int temp;
@@ -496,5 +529,6 @@ namespace MeCung
         {
             return root.elements.Count > 0;
         }
+#endregion
     }
 }
