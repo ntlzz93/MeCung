@@ -28,47 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnRandom = new System.Windows.Forms.Button();
-            this.btnSelfCreate = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnRandom
+            // pictureBox1
             // 
-            this.btnRandom.Location = new System.Drawing.Point(630, 23);
-            this.btnRandom.Name = "btnRandom";
-            this.btnRandom.Size = new System.Drawing.Size(88, 39);
-            this.btnRandom.TabIndex = 0;
-            this.btnRandom.Text = "Random Battle";
-            this.btnRandom.UseVisualStyleBackColor = true;
-            this.btnRandom.Click += new System.EventHandler(this.btnRandom_Click);
+            this.pictureBox1.Location = new System.Drawing.Point(13, 13);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(598, 480);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
-            // btnSelfCreate
+            // timer1
             // 
-            this.btnSelfCreate.Location = new System.Drawing.Point(630, 85);
-            this.btnSelfCreate.Name = "btnSelfCreate";
-            this.btnSelfCreate.Size = new System.Drawing.Size(88, 39);
-            this.btnSelfCreate.TabIndex = 1;
-            this.btnSelfCreate.Text = "Create Battle";
-            this.btnSelfCreate.UseVisualStyleBackColor = true;
-            this.btnSelfCreate.Click += new System.EventHandler(this.btnSelfCreate_Click);
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 2000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // frmMainGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(730, 568);
-            this.Controls.Add(this.btnSelfCreate);
-            this.Controls.Add(this.btnRandom);
+            this.ClientSize = new System.Drawing.Size(640, 568);
+            this.Controls.Add(this.pictureBox1);
             this.Name = "frmMainGame";
             this.Text = "Mê Cung";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btnRandom;
-        private System.Windows.Forms.Button btnSelfCreate;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

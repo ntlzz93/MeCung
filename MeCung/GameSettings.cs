@@ -61,7 +61,7 @@ namespace MeCung
         #region Start Game
         public void startGame()
         {
-            //createBoard(row, col) ;
+            createRandomBoard(row, col);
             makeRoot(initState);
             success = false;
             treeSearch currentNode = new treeSearch();
@@ -103,11 +103,11 @@ namespace MeCung
         #endregion
 
         #region Self-Create Board Game
-        public void createBoard(int row,int column)
-        {
+        //public void createBoard(int row,int column)
+        //{
             
             
-        }
+        //}
         #endregion
 
         #region Create Random Board
@@ -142,7 +142,6 @@ namespace MeCung
             treeSearch rootNode = new treeSearch();
             for (int i = 0; i < state.Count; i++)
             {
-                //rootNode.elements[i] = state[i];
                 rootNode.elements.Add(state[i]);
                 if (rootNode.elements[i] == 2)
                 {
@@ -495,41 +494,49 @@ namespace MeCung
             {
                 success = true;
                 printResultConsole(state.link1);
+                addLstResult(state.link1);
             }
             else if (success2)
             {
                 success = true;
                 printResultConsole(state.link2);
+                addLstResult(state.link2);
             }
             else if (success3)
             {
                 success = true;
                 printResultConsole(state.link3);
+                addLstResult(state.link3);
             }
             else if (success4)
             {
                 success = true;
                 printResultConsole(state.link4);
+                addLstResult(state.link4);
             }
             else if (success5)
             {
                 success = true;
                 printResultConsole(state.link5);
+                addLstResult(state.link5);
             }
             else if (success6)
             {
                 success = true;
                 printResultConsole(state.link6);
+                addLstResult(state.link6);
             }
             else if (success7)
             {
                 success = true;
                 printResultConsole(state.link7);
+                addLstResult(state.link7);
             }
             else if (success8)
             {
                 success = true;
                 printResultConsole(state.link8);
+                addLstResult(state.link8);
             }
 
             if (success)
@@ -562,6 +569,18 @@ namespace MeCung
                 System.Console.WriteLine();
             }
         }
+
+        public  List<treeSearch> temp2 = new List<treeSearch>();
+        public void addLstResult(treeSearch node)
+        {
+            while (node != null)
+            {
+                temp2.Add(node);
+                node = node.parent;
+            }
+           
+        }
+
         public void makeMove(treeSearch parentNode, treeSearch currentNode, string director)
         {
             for (int i = 0; i < parentNode.elements.Count; i++)

@@ -14,78 +14,119 @@ namespace MeCung
         public frmMainGame()
         {
             InitializeComponent();
+            listResult = new List<treeSearch>();
+            lst = new List<int[,]>();
+
+            game = new GameSettings();
+            game.startGame();
+            listResult = game.temp2;
+            if (listResult != null)
+            {
+                for (int i = listResult.Count - 1; i >= 0; i--)
+                {
+                    convert(listResult[i].elements);
+                }
+                // init map
+                state = lst.ElementAt(0);
+                Form_Load(pictureBox1, 100, state);
+            }
+            else
+            {
+                MessageBox.Show("Không tìm thấy kết quả");
+                return;
+            }
         }
 
         GameSettings game;
-        private Panel[,] _chessBoardPanels;
 
-        // event handler of Form Load... init things here
-        private void Form_Load()
+        // danh sach ket qua tim duoc tu GameSetting
+        List<treeSearch> listResult;
+
+        // mang 2 chieu cua ket qua
+        List<int[,]> lst;
+
+        int[,] temp;
+
+        // Trang thai di chuyen
+        int[,] state = new int[5,5];
+
+        // kich co cua hop
+        int size;
+
+        private void convert(List<int> lstTree)
         {
-            const int tileSize = 100;
-            const int gridSize = 5;
-            var clr1 = Color.Black; // can't move
-            var clr2 = Color.White; // can move
-            var clr3 = Color.DarkBlue; // start
-            var clr4 = Color.DarkRed; // goal
-            int i = 0;
-
-            _chessBoardPanels = new Panel[gridSize, gridSize];
-
-            for (var n = 0; n < gridSize; n++)
+            temp = new int[5, 5];
+            int k = 0;
+            while (k < lstTree.Count)
             {
-                for (var m = 0; m < gridSize; m++)
+                for (int i = 0; i < 5; i++)
                 {
-                     var newPanel = new Panel
+                    for (int j = 0; j < 5; j++)
                     {
-                        Size = new Size(tileSize, tileSize),
-                        Location = new Point(tileSize * n, tileSize * m)
-                    };
-
-                    Controls.Add(newPanel);
-
-                    _chessBoardPanels[n, m] = newPanel;
-
-                    if (i != game.getSize())
-                    {
-                        if (game.board[i] == 0)
-                        {
-                            newPanel.BackColor = clr1;
-                        }
-                        else if (game.board[i] == 1)
-                        {
-                            newPanel.BackColor = clr2;
-                        }
-                        else if (game.board[i] == 2)
-                        {
-                            newPanel.BackColor = clr3;
-                        }
-                        else if (game.board[i] == 3)
-                        {
-                            newPanel.BackColor = clr4;
-                        }
-                        i++;
+                        temp[i, j] = lstTree[k];
+                        k++;
                     }
+                }
+            }
+            //result = temp;
+            lst.Add(temp);
+        }
+
+        private void Form_Load(PictureBox pb,int size,int[,] state)
+        {
+            this.size = size;
+            //this.state = state;
+            pb.Width = size * state.GetLength(1);
+            pb.Height = size * state.GetLength(0);
+            pb.Visible = true;
+            timer1.Start();
+        }
+
+        private void drawTable(Graphics g,int[,] state){
+            Color color = new Color();
+            for (int i = 0; i < state.GetLength(0); i++)
+            {
+                for (int j = 0; j < state.GetLength(1); j++)
+                {
+                    switch (state[i, j])
+                    {
+                        case 0:
+                            color = Color.Black;
+                            break;
+                        case 1:
+                            color = Color.White;
+                            break;
+                        case 2:
+                            color = Color.Blue;
+                            break;
+                        case 3:
+                            color = Color.Red;
+                            break;
+                    }
+                    g.FillRectangle(new SolidBrush(color), new Rectangle(j * size, i * size, size, size));
                 }
             }
         }
 
-        private void btnRandom_Click(object sender, EventArgs e)
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            game = new GameSettings();
-            game.createRandomBoard(5, 5);
-            Form_Load();
-            game.startGame();
+            Graphics g = e.Graphics;
+            drawTable(g, state);
         }
-
-        private void btnSelfCreate_Click(object sender, EventArgs e)
+        int count = 1;
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            game = new GameSettings();
-            game.createBoard(5, 5);
-            Form_Load();
-            game.startGame();
+            if (count < lst.Count)
+            {
+                state = lst[count];
+                pictureBox1.Invalidate();
+                count++;
+            }
+            else
+            {
+                timer1.Stop();
+            }
         }
-
 
     }
 }
