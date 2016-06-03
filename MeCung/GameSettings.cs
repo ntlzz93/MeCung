@@ -41,6 +41,8 @@ namespace MeCung
         private treeSearch root; // trang thai parent
         int posStart, posGoal = 0; // vi tri cua trang thai dau va cuoi.
         bool success = false;
+        private List<treeSearch> keepTrack; // luu lai vet
+
 
         #region Create Map Additional
 
@@ -86,7 +88,7 @@ namespace MeCung
             goalStateNode = new treeSearch();
             map = new List<int>();
             lstMap = new List<List<int>>();
-
+            keepTrack = new List<treeSearch>();
             createMap();
         }
         #endregion
@@ -429,6 +431,39 @@ namespace MeCung
                 }
             }
         }
+
+        int[] arrPos;
+        public void keepTrackState(treeSearch treeNode)
+        {
+            arrPos = new int[100];
+            //chane value of node
+            while (treeNode != null)
+            {
+                keepTrack.Add(treeNode);
+                treeNode = treeNode.parent;
+            }
+            for (int i = keepTrack.Count - 1; i >= 0 ; i--)
+            {
+                for (int j = 0; j < keepTrack[i].elements.Count; j++)
+                {
+                    int num = keepTrack[i].elements[j];
+                    if (num == 2)
+                        arrPos[i] = j;
+                }
+            }
+            int k = 0;
+            arrPos.Reverse();
+            for (int i = 0; i < arrPos.Length;i++ )
+            {
+                int pos = arrPos[k];
+                keepTrack[0].elements[pos] = 4;
+                k++;
+            }
+            treeNode = keepTrack[0];
+            printResultConsole(treeNode);
+            addLstResult(treeNode);
+        }
+
         public void checkSuccess(treeSearch state)
         {
             bool success1 = true, success2 = true, success3 = true, success4 = true;
@@ -534,50 +569,42 @@ namespace MeCung
             if (success1)
             {
                 success = true;
-                printResultConsole(state.link1);
-                addLstResult(state.link1);
+                keepTrackState(state.link1);
             }
             else if (success2)
             {
                 success = true;
-                printResultConsole(state.link2);
-                addLstResult(state.link2);
+                keepTrackState(state.link2);
             }
             else if (success3)
             {
                 success = true;
-                printResultConsole(state.link3);
-                addLstResult(state.link3);
+                keepTrackState(state.link3);
             }
             else if (success4)
             {
                 success = true;
-                printResultConsole(state.link4);
-                addLstResult(state.link4);
+                keepTrackState(state.link4);
             }
             else if (success5)
             {
                 success = true;
-                printResultConsole(state.link5);
-                addLstResult(state.link5);
+                keepTrackState(state.link5);
             }
             else if (success6)
             {
                 success = true;
-                printResultConsole(state.link6);
-                addLstResult(state.link6);
+                keepTrackState(state.link6);
             }
             else if (success7)
             {
                 success = true;
-                printResultConsole(state.link7);
-                addLstResult(state.link7);
+                keepTrackState(state.link7);
             }
             else if (success8)
             {
                 success = true;
-                printResultConsole(state.link8);
-                addLstResult(state.link8);
+                keepTrackState(state.link8);
             }
 
             if (success)

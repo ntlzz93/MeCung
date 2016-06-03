@@ -102,6 +102,9 @@ namespace MeCung
                         case 3:
                             color = Color.Red;
                             break;
+                        case 4:
+                            color = Color.Green;
+                            break;
                     }
                     g.FillRectangle(new SolidBrush(color), new Rectangle(j * size, i * size, size, size));
                 }
