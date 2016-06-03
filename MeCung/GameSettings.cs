@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -32,7 +33,7 @@ namespace MeCung
     class GameSettings
     {
         #region Variable
-        public List<int> board;
+        private List<int> board;
         private List<int> initState;
         private List<int> goalState;
         private treeSearch goalStateNode;
@@ -41,7 +42,36 @@ namespace MeCung
         int posStart, posGoal = 0; // vi tri cua trang thai dau va cuoi.
         bool success = false;
 
-        int row = 5, col = 5;
+        #region Create Map Additional
+
+        private List<int> map;
+        private List<List<int>> lstMap;
+        private int counter = 0;
+
+        private string fileName = "D:\\Study\\IT\\Artificial Intelligence\\Source Code\\MeCung\\MeCung\\map.txt";
+
+        public void createMap()
+        {
+            var fileContent = File.ReadAllText(fileName);
+            var stringArray = fileContent.Split((string[])null, StringSplitOptions.RemoveEmptyEntries);
+            var numbersArray = stringArray.Select(arg => int.Parse(arg)).ToList();
+
+            for (int i = 0; i < numbersArray.Count; i++)
+            {
+                int number = numbersArray[i];
+                map.Add(number);
+                counter++;
+                if (counter == row * col)
+                {
+                    lstMap.Add(map);
+                    map = new List<int>();
+                    counter = 0;
+                }
+            }
+        }
+
+        #endregion
+        const int row = 5, col = 5;
         public int getSize()
         {
             return board.Count;
@@ -54,7 +84,10 @@ namespace MeCung
             States = new List<treeSearch>();
             root = new treeSearch();
             goalStateNode = new treeSearch();
+            map = new List<int>();
+            lstMap = new List<List<int>>();
 
+            createMap();
         }
         #endregion
 
@@ -102,33 +135,41 @@ namespace MeCung
         }
         #endregion
 
-        #region Self-Create Board Game
-        //public void createBoard(int row,int column)
-        //{
-            
-            
-        //}
-        #endregion
-
         #region Create Random Board
         public void createRandomBoard(int row, int column)
         {
             Random rdm = new Random();
             board = new List<int>();
 
-            for (int i = 0; i < row * column; i++)
+            //for (int i = 0; i < row * column; i++)
+            //{
+            //    int num = rdm.Next(0, 2);
+            //    board.Add(num);
+            //}
+            //int start = rdm.Next(0, 25);
+            //int finish = rdm.Next(0, 25);
+            //if (start != finish)
+            //{
+            //    board[start] = 2;
+            //    board[finish] = 3;
+            //    posStart = start;
+            //    posGoal = finish;
+            //}
+
+            int size = lstMap.Count;
+            int num = rdm.Next(0, size+1);
+            board = lstMap.ElementAt(num);
+
+            for (int i = 0; i < board.Count; i++)
             {
-                int num = rdm.Next(0, 2);
-                board.Add(num);
-            }
-            int start = rdm.Next(0, 25);
-            int finish = rdm.Next(0, 25);
-            if (start != finish)
-            {
-                board[start] = 2;
-                board[finish] = 3;
-                posStart = start;
-                posGoal = finish;
+                if (board[i] == 2)
+                {
+                    posStart = i;
+                }
+                else if (board[i] == 3)
+                {
+                    posGoal = i;
+                }
             }
 
             createInitState(board);
